@@ -26,7 +26,7 @@ $.fn.languagePicker = function(options){
 	
 };
 LanguagePicker = {
-	defaultLang: 'en',
+	defaultLang: null,
 	currentLang: 'en',
 	preferredLangKey: 'BING_TRANSLATE_PREFERRED_LANG',
 	localizedLanguageNames: {},
@@ -105,6 +105,7 @@ LanguagePicker = {
 		//Create the language picker DOM element
 		var $this = $(ctrl).addClass('language-picker');
 		var ul = $('<ul/>').addClass('language-picker-list').attr('translate','no');
+		this.defaultLang = navigator.language.substring(0,2);
 		
 		//Build the list of languages in their  that can be used
 		var localLangs = Microsoft.Translator.Widget.GetLanguagesForTranslateLocalized();
@@ -161,8 +162,8 @@ LanguagePicker = {
 	},
 	translate: function(to){
 		LanguagePicker.currentLang = to;
-		Microsoft.Translator.Widget.Translate(this.defaultLang,to,this.translateProgress,this.translateError,this.translateComplete,this.translateRestoreOriginal,60000);
 		$('.language-picker-list').append(LanguagePicker.loadingImage);
+		Microsoft.Translator.Widget.Translate(this.defaultLang,to,this.translateProgress,this.translateError,this.translateComplete,this.translateRestoreOriginal,60000);
 	},
 	translateComplete: function(){
 		$('#languagePicker').mouseleave();
@@ -171,7 +172,13 @@ LanguagePicker = {
 		LanguagePicker.getCurrentLanguageLanguageList();
 		LanguagePicker.loadingImage.remove('.language-picker-list');
 	},
-	translateError: function(error){},
+	translateError: function(error){
+		console.log(error);
+	},
 	translateProgress: function(progress){},
-	translateRestoreOriginal: function(){},
+	translateRestoreOriginal: function(){
+		if(LanguagePicker.loadingImage.hasClass('language-picker-list')){
+			translateComplete();
+		}
+	},
 };
