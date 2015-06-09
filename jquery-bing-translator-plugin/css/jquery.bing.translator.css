@@ -1,3 +1,6 @@
+#WidgetFloaterPanels{
+	display: none !important;
+}
 #languagePicker{
 	position: relative;
 	min-width:150px;

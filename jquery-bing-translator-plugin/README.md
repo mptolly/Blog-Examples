@@ -1,10 +1,6 @@
-#jQuery Bing Translator Plugin
+#jQuery Bing Translator Plug-in
+The Bing Translator plug-in is intended to be used to embed the Bing Translator widget into elements on a page
 
-####Required Javascript Libraries for the plugin
+####Required Javascript Libraries for the plug-in
 * [jQuery 1.8.2](http://code.jquery.com/jquery-1.8.2.min.js) - minimum tested version
 * [Locache](https://raw.githubusercontent.com/d0ugal-archive/locache/master/build/locache.min.js)
-
-####Make sure you place the following HTML in your DOM to prevent the Bing Translator from creating a floating div
-```
-<div id='WidgetFloaterPanels' style='display:none;'></div>
-```
