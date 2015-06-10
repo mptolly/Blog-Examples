@@ -171,7 +171,7 @@ var LanguagePicker = {
 			$this.css('margin-left','30px');
 		}
 
-		$this.text('Translator: ');
+		$this.text('Translate: ');
 		$this.append($('<span/>').addClass('language-name').attr('translate','no').text(LanguagePicker.localizedLanguageNames[LanguagePicker.currentLang]));
 		ul.appendTo($this);
 	},
