@@ -1,5 +1,7 @@
 #jquery Bing Translator Plug-in
-The Bing Translator plug-in is intended to be used to embed the Bing Translator widget into elements on a page
+The Bing Translator plug-in is intended to be used to embed the Bing Translator widget into elements on a page.
+
+*This plugin takes advantage of the [Microsoft Bing Translator Widget](https://www.bing.com/widget/translator)*
 
 ###Required Javascript Libraries for the plug-in
 * [jQuery 1.8.2](http://code.jquery.com/jquery-1.8.2.min.js) - minimum tested version
