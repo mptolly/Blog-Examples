@@ -72,7 +72,7 @@ LanguagePicker = {
 		});
 	},
 	getPreferredLanguage: function(){
-		var prefLang = localStorage.[this.preferredLangKey];
+		var prefLang = localStorage[this.preferredLangKey];
 		if(!prefLang){
 			prefLang = (navigator.language ? navigator.language : navigator.browserLanguage).substring(0,2);
 			this.setPreferredLanguage(prefLang);
