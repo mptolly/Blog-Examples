@@ -131,7 +131,7 @@ var LanguagePicker = {
 		$('<div/>').append($('<a/>').attr('href','#').addClass('orig-lang').text('Original Language: '+ LanguagePicker.localizedLanguageNames[LanguagePicker.defaultLang]).attr('onclick','Microsoft.Translator.Widget.RestoreOriginal();')).appendTo(LanguagePicker.footer);
 		
 		//Create elements and complete the inital translation if translate is set to auto
-		if(options && options["translate"]=='auto'){
+		if(options && options["mode"]=='auto'){
 			var preferredLanguage = LanguagePicker.getPreferredLanguage();
 
 			//Set delay from options if set
