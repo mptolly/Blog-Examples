@@ -36,7 +36,7 @@ $.fn.languagePicker = function(options){
 
 	
 };
-LanguagePicker = {
+var LanguagePicker = {
 	defaultLang: 'en', // Language the page/site is in when the page loads
 	currentLang: 'en', // current Language the page is translated to
 	preferredLangKey: 'BING_TRANSLATE_PREFERRED_LANG', // Key used to get preferred language from local storage (only used when translate set to auto)
