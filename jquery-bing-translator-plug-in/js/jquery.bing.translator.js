@@ -1,8 +1,16 @@
-///required bing translator javascript library (url below) & the bootstrap dropdown functionality
-// https://ssl.microsofttranslator.com/ajax/v3/WidgetV3.ashx?siteData=ueOIGRSKkd965FeEGM5JtQ**
-$.fn.languagePicker = function(options){
 
-	//Write Bing translator script to page
+/*!
+ * jQuery Bing Translator plug-in
+ * http://jquery.com/
+ *
+ * Released under the Apache 2.0 license
+ * https://raw.githubusercontent.com/mptolly/Blog-Examples/master/LICENSE
+ *
+ * Date: 2015-06-15
+ */
+
+$.fn.languagePicker = function(options){
+	// Load the Bing Translator script to the page, then build the tranlsator menu in the specified DOM element
 	var selectedControl = this;
 	var script = document.createElement("script");
 	if(script.readyState) {  //IE
@@ -26,14 +34,15 @@ $.fn.languagePicker = function(options){
 	
 };
 LanguagePicker = {
-	defaultLang: null,
-	currentLang: 'en',
-	preferredLangKey: 'BING_TRANSLATE_PREFERRED_LANG',
-	localizedLanguageNames: {},
-	sortableLanguages:[],
-	loadingImageUrl:"images/ajax-loader.gif",
-	loadingImage:$('<div/>').css('position','absolute').css('top','-2px').css('left','-2px').css('background-color','#FFFFFF').css('padding','22% 45%').append($('<div/>').text('Translating...').css('font-size','14px')).append($('<img/>').attr('src',this.loadingImageUrl)),
-	buildLanguageList: function(languages){
+	defaultLang: 'en', // Language the page/site is in when the page loads
+	currentLang: 'en', // current Language the page is translated to
+	preferredLangKey: 'BING_TRANSLATE_PREFERRED_LANG', // Key used to get preferred language from local storage (only used when translate set to auto)
+	localizedLanguageNames: {}, // Dictionary of Language localized names with the language code being the key
+	sortableLanguages:[], // Used to get an alphabetically sorted list of languages into the dropdown
+	loadingImageUrl:"images/ajax-loader.gif", //URL of the images  used to signify translating of content
+	loadingImage:$('<div/>').css('position','absolute').css('top','-2px').css('left','-2px').css('background-color','#FFFFFF').css('padding','22% 45%').append($('<div/>').text('Translating...').css('font-size','14px')).append($('<img/>').attr('src',this.loadingImageUrl)), //Loating image DOM Element
+	
+	buildLanguageList: function(languages){ // Create the dropdown list that displays language options for translation
 		languages = languages.sort(this.languageSort);
 		var column;
 		for(var i=0;i<languages.length;i++){
@@ -48,7 +57,7 @@ LanguagePicker = {
 		}
 		LanguagePicker.footer.appendTo('.language-picker-list');
 	},
-	buildPrefLangPicker: function(prefLang,container){
+	buildPrefLangPicker: function(prefLang,container){ // Creates the preferred language selector for when the translate auto is turned on
 		var ul = $('<ul/>').addClass('dropdown-menu');
 		var langs = this.sortableLanguages.sort(this.languageSort);
 		for(var i in langs){
@@ -61,17 +70,17 @@ LanguagePicker = {
 		ul.appendTo(container)
 		container.attr('data-selected',prefLang).prepend($('<div/>').addClass('lang-name').text(this.localizedLanguageNames[prefLang]));
 	},
-	changeLangSelected: function(e){
+	changeLangSelected: function(e){ // Translate language item selected
 		translate($(e.target).data('lang-code'));
 		e.preventDefault();
 		return false;
 	},
-	getCurrentLanguageLanguageList: function(){
+	getCurrentLanguageLanguageList: function(){ //Get language list with the names localised into the currently displayed language
 		Microsoft.Translator.Widget.GetLanguagesForTranslate(this.currentLang ? this.currentLang : this.defaultLang ,function(languages){
 			LanguagePicker.buildLanguageList(languages);
 		});
 	},
-	getPreferredLanguage: function(){
+	getPreferredLanguage: function(){ // Get te epreferred language set or default the prefered language to the default language
 		var prefLang = localStorage[this.preferredLangKey];
 		if(!prefLang){
 			prefLang = (navigator.language ? navigator.language : navigator.browserLanguage).substring(0,2);
@@ -79,7 +88,7 @@ LanguagePicker = {
 		}
 		return prefLang;
 	},
-	isIE: function(version, comparison) {
+	isIE: function(version, comparison) { // Check for IE version
 		var cc  		= 'IE',
 			b 			= document.createElement('B'),
 			docElem 	= document.documentElement,
@@ -96,16 +105,14 @@ LanguagePicker = {
 		docElem.removeChild(b);
 		return isIE;
 	},
-	languageSort: function(first,second){
+	languageSort: function(first,second){ // Sort languages
 		if(first.Name==second.Name) return 0;
 		if(first.Name>second.Name) return 1;
 		return -1;
 	},
-	loadPicker:function(ctrl,options){
-		//Create the language picker DOM element
+	loadPicker:function(ctrl,options){ //Build the picker and insert it into the DOM element specified
 		var $this = $(ctrl).addClass('language-picker');
 		var ul = $('<ul/>').addClass('language-picker-list').attr('translate','no');
-		this.defaultLang = navigator.language.substring(0,2);
 		
 		//Build the list of languages in their  that can be used
 		var localLangs = Microsoft.Translator.Widget.GetLanguagesForTranslateLocalized();
@@ -117,6 +124,7 @@ LanguagePicker = {
 		LanguagePicker.footer = $('<div/>').addClass('language-picker-footer');
 		$('<div/>').append($('<a/>').attr('href','#').addClass('orig-lang').text('Original Language: '+ LanguagePicker.localizedLanguageNames[LanguagePicker.defaultLang]).attr('onclick','Microsoft.Translator.Widget.RestoreOriginal();')).appendTo(LanguagePicker.footer);
 		
+		//Create elements and complete the inital translation if translate is set to auto
 		if(options && options["translate"]=='auto'){
 			var preferredLanguage = LanguagePicker.getPreferredLanguage();
 			
@@ -139,6 +147,7 @@ LanguagePicker = {
 			
 			LanguagePicker.footer.append(preferredLanguageElement);
 			
+			//Set delay to give the browser time complete most ajax calls to load other content
 			$(window).load(function(){
 				setTimeout(function(){
 					LanguagePicker.translate(preferredLanguage);
@@ -157,26 +166,26 @@ LanguagePicker = {
 		$this.append($('<span/>').addClass('language-name').attr('translate','no').text(LanguagePicker.localizedLanguageNames[LanguagePicker.currentLang]));
 		ul.appendTo($this);
 	},
-	setPreferredLanguage: function(langCode){
+	setPreferredLanguage: function(langCode){ // Set the preferred language for when the page translate is set to auto
 		localStorage.set(this.preferredLangKey,langCode);
 	},
-	translate: function(to){
+	translate: function(to){ // Translate page content
 		LanguagePicker.currentLang = to;
 		$('.language-picker-list').append(LanguagePicker.loadingImage);
 		Microsoft.Translator.Widget.Translate(this.defaultLang,to,this.translateProgress,this.translateError,this.translateComplete,this.translateRestoreOriginal,60000);
 	},
-	translateComplete: function(){
+	translateComplete: function(){ // Translate complete callback
 		$('#languagePicker').mouseleave();
 		$('.language-name').text(LanguagePicker.localizedLanguageNames[LanguagePicker.currentLang]);
 		$('.language-picker-list').empty();
 		LanguagePicker.getCurrentLanguageLanguageList();
 		LanguagePicker.loadingImage.remove('.language-picker-list');
 	},
-	translateError: function(error){
+	translateError: function(error){ //Translate error callback
 		console.log(error);
 	},
-	translateProgress: function(progress){},
-	translateRestoreOriginal: function(){
+	translateProgress: function(progress){}, //Translate progress callback
+	translateRestoreOriginal: function(){ // Restore content to initial language
 		if(LanguagePicker.loadingImage.hasClass('language-picker-list')){
 			translateComplete();
 		}
