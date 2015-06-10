@@ -6,7 +6,7 @@
  * Released under the Apache 2.0 license
  * https://raw.githubusercontent.com/mptolly/Blog-Examples/master/LICENSE
  *
- * Browser Support: Requires localStarage Support
+ * Browser Support: Requires localStorage Support
  * http://www.w3schools.com/html/html5_webstorage.asp
  *
  * Date: 2015-06-15
