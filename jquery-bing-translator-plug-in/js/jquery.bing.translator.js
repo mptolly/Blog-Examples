@@ -163,9 +163,7 @@ LanguagePicker = {
 				},LanguagePicker.autoTranslateDelay);
 			});
 		}
-		else{
-			LanguagePicker.getCurrentLanguageLanguageList();
-		}
+		LanguagePicker.getCurrentLanguageLanguageList();
 
 		if(this.isIE(8,'lte')){
 			$this.css('margin-left','30px');
@@ -195,8 +193,6 @@ LanguagePicker = {
 	},
 	translateProgress: function(progress){}, //Translate progress callback
 	translateRestoreOriginal: function(){ // Restore content to initial language
-		if(LanguagePicker.loadingImage.hasClass('language-picker-list')){
-			translateComplete();
-		}
+		translateComplete();
 	},
 };
