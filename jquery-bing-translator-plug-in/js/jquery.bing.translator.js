@@ -43,7 +43,6 @@ var LanguagePicker = {
 	localizedLanguageNames: {}, // Dictionary of Language localized names with the language code being the key
 	sortableLanguages:[], // Used to get an alphabetically sorted list of languages into the dropdown
 	loadingImageUrl:"images/ajax-loader.gif", //URL of the images  used to signify translating of content
-	loadingImage:$('<div/>').addClass("loadingImage").append($('<div/>').text('Translating...')).append($('<img/>').attr('src',LanguagePicker.loadingImageUrl)), //Loating image DOM Element
 	autoTranslateDelay:0, //Delay introduced before auto translate occurs.  Gives browser time to load any async content before translating the page (Only used when translate option set to auto)
 
 	buildLanguageList: function(languages){ // Create the dropdown list that displays language options for translation
@@ -83,6 +82,9 @@ var LanguagePicker = {
 		Microsoft.Translator.Widget.GetLanguagesForTranslate(this.currentLang ? this.currentLang : this.defaultLang ,function(languages){
 			LanguagePicker.buildLanguageList(languages);
 		});
+	},
+	getLoadingImage: function(){
+		return $('<div/>').addClass("loadingImage").append($('<div/>').text('Translating...')).append($('<img/>').attr('src',this.loadingImageUrl));
 	},
 	getPreferredLanguage: function(){ // Get te epreferred language set or default the prefered language to the default language
 		var prefLang = localStorage[this.preferredLangKey];
@@ -178,7 +180,7 @@ var LanguagePicker = {
 	},
 	translate: function(to){ // Translate page content
 		LanguagePicker.currentLang = to;
-		$('.language-picker-list').append(LanguagePicker.loadingImage);
+		$('.language-picker-list').append(LanguagePicker.getLoadingImage());
 		Microsoft.Translator.Widget.Translate(this.defaultLang,to,this.translateProgress,this.translateError,this.translateComplete,this.translateRestoreOriginal,60000);
 	},
 	translateComplete: function(){ // Translate complete callback
@@ -186,7 +188,7 @@ var LanguagePicker = {
 		$('.language-name').text(LanguagePicker.localizedLanguageNames[LanguagePicker.currentLang]);
 		$('.language-picker-list').empty();
 		LanguagePicker.getCurrentLanguageLanguageList();
-		LanguagePicker.loadingImage.remove('.language-picker-list');
+		$('.loadingImage').remove('.language-picker-list');
 	},
 	translateError: function(error){ //Translate error callback
 		console.log(error);
