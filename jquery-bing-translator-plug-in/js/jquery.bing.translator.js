@@ -116,7 +116,7 @@ LanguagePicker = {
 	},
 	loadPicker:function(ctrl,options){ //Build the picker and insert it into the DOM element specified
 		var $this = $(ctrl).addClass('language-picker');
-		var ul = $('<ul/>').addClass('language-picker-list').attr('translate','no');
+		var ul = $('<ul/>').addClass('language-picker-list');
 		
 		//Build the list of languages in their  that can be used
 		var localLangs = Microsoft.Translator.Widget.GetLanguagesForTranslateLocalized();
