@@ -1,0 +1,9 @@
+nav{
+	background-color: green;
+}
+nav ul li a,
+nav ul li a:hover,
+nav ul li a:visited{
+	text-decoration: none;
+	color: white;
+}
