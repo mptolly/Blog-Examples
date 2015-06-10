@@ -195,6 +195,7 @@ var LanguagePicker = {
 	},
 	translateProgress: function(progress){}, //Translate progress callback
 	translateRestoreOriginal: function(){ // Restore content to initial language
+		LanguagePicker.currentLang = LanguagePicker.defaultLang;
 		LanguagePicker.translateComplete();
 	},
 };
