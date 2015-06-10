@@ -116,3 +116,17 @@ a.orig-lang{
 a.orig-lang:hover{
 text-decoration:none;
 }
+.loadingImage{
+	position:absolute;
+	top:-2px;
+	left:-2px;
+	background-color:#FFFFFF;
+	padding:22% 45%;
+}
+.loadingImage > div{
+	font-size:14px;
+}
+.loadingImage > img{
+	width: 100%;
+	height: 100%;
+}
