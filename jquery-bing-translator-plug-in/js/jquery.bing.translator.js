@@ -86,7 +86,7 @@ var LanguagePicker = {
 	getLoadingImage: function(){
 		return $('<div/>').addClass("loadingImage").append($('<div/>').text('Translating...')).append($('<img/>').attr('src',this.loadingImageUrl));
 	},
-	getPreferredLanguage: function(){ // Get te epreferred language set or default the prefered language to the default language
+	getPreferredLanguage: function(){ // Get te epreferred language set or default the prefered language to the browser language
 		var prefLang = localStorage[this.preferredLangKey];
 		if(!prefLang){
 			prefLang = (navigator.language ? navigator.language : navigator.browserLanguage).substring(0,2);
@@ -131,7 +131,7 @@ var LanguagePicker = {
 		$('<div/>').append($('<a/>').attr('href','#').addClass('orig-lang').text('Original Language: '+ LanguagePicker.localizedLanguageNames[LanguagePicker.defaultLang]).attr('onclick','Microsoft.Translator.Widget.RestoreOriginal();')).appendTo(LanguagePicker.footer);
 		
 		//Create elements and complete the inital translation if translate is set to auto
-		if(options && options["translate"]=='auto'){
+		if(options && options["mode"]=='auto'){
 			var preferredLanguage = LanguagePicker.getPreferredLanguage();
 
 			//Set delay from options if set
