@@ -167,7 +167,7 @@ LanguagePicker = {
 		ul.appendTo($this);
 	},
 	setPreferredLanguage: function(langCode){ // Set the preferred language for when the page translate is set to auto
-		localStorage.set(this.preferredLangKey,langCode);
+		localStorage.setItem(this.preferredLangKey,langCode);
 	},
 	translate: function(to){ // Translate page content
 		LanguagePicker.currentLang = to;
