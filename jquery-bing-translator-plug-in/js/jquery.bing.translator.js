@@ -6,6 +6,9 @@
  * Released under the Apache 2.0 license
  * https://raw.githubusercontent.com/mptolly/Blog-Examples/master/LICENSE
  *
+ * Browser Support: Requires localStarage Support
+ * http://www.w3schools.com/html/html5_webstorage.asp
+ *
  * Date: 2015-06-15
  */
 
@@ -128,6 +131,11 @@ LanguagePicker = {
 		//Create elements and complete the inital translation if translate is set to auto
 		if(options && options["translate"]=='auto'){
 			var preferredLanguage = LanguagePicker.getPreferredLanguage();
+
+			//Set delay from options if set
+			if(options["delay"]){
+				this.autoTranslateDelay = options["delay"];
+			}
 			
 			var preferredLanguageElement = $('<div/>').addClass('preferred-language').addClass('no-edit').text('Preferred Language: ');
 			$('<span/>').addClass('pref-lang-read').addClass('pref-lang-name').text(LanguagePicker.localizedLanguageNames[preferredLanguage]).appendTo(preferredLanguageElement);
