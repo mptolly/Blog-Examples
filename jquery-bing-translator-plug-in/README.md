@@ -37,3 +37,5 @@ OR
 ```javascript
 $("#element").languagePicker({mode:'auto',delay:2000});
 ```
+
+####[Demo](http://mptolly.github.io/Blog-Examples/jquery-bing-translator-plug-in/)
