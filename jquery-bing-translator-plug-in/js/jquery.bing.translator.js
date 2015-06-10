@@ -43,7 +43,7 @@ LanguagePicker = {
 	localizedLanguageNames: {}, // Dictionary of Language localized names with the language code being the key
 	sortableLanguages:[], // Used to get an alphabetically sorted list of languages into the dropdown
 	loadingImageUrl:"images/ajax-loader.gif", //URL of the images  used to signify translating of content
-	loadingImage:$('<div/>').addClass("loadingImage").css('position','absolute').css('top','-2px').css('left','-2px').css('background-color','#FFFFFF').css('padding','22% 45%').append($('<div/>').text('Translating...').css('font-size','14px')).append($('<img/>').attr('src',this.loadingImageUrl)), //Loating image DOM Element
+	loadingImage:$('<div/>').addClass("loadingImage").append($('<div/>').text('Translating...')).append($('<img/>').attr('src',LanguagePicker.loadingImageUrl)), //Loating image DOM Element
 	autoTranslateDelay:0, //Delay introduced before auto translate occurs.  Gives browser time to load any async content before translating the page (Only used when translate option set to auto)
 
 	buildLanguageList: function(languages){ // Create the dropdown list that displays language options for translation
