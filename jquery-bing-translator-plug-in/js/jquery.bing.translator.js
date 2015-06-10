@@ -60,23 +60,22 @@ var LanguagePicker = {
 		}
 		LanguagePicker.footer.appendTo('.language-picker-list');
 	},
-	buildPrefLangPicker: function(prefLang,container){ // Creates the preferred language selector for when the translate auto is turned on
-		var ul = $('<ul/>').addClass('dropdown-menu');
+	buildPrefLangPicker: function(prefLang,list){ // Creates the preferred language selector for when the translate auto is turned on
 		var langs = this.sortableLanguages.sort(this.languageSort);
 		for(var i in langs){
-			$('<li/>').attr('data-lang',langs[i].Code).text(langs[i].Name).click(function(e){
-				var code =$(this).data('lang');
-				$('.dropdown').attr('data-selected',code);
-				$('.lang-name').text(LanguagePicker.localizedLanguageNames[code]);
-			}).appendTo(ul);
+			$('<li/>').attr('onclick','LanguagePicker.changePreferredLangugage(this);').attr('data-lang',langs[i].Code).text(langs[i].Name).appendTo(list);
 		}
-		ul.appendTo(container)
-		container.attr('data-selected',prefLang).prepend($('<div/>').addClass('lang-name').text(this.localizedLanguageNames[prefLang]));
 	},
 	changeLangSelected: function(e){ // Translate language item selected
 		translate($(e.target).data('lang-code'));
 		e.preventDefault();
 		return false;
+	},
+	changePreferredLangugage:function(e){
+		var code =$(e).data('lang');
+		$('.pref-lang-picker > span').text(this.localizedLanguageNames[code]);
+		this.setPreferredLanguage(code);
+		this.translate(code);
 	},
 	getCurrentLanguageLanguageList: function(){ //Get language list with the names localised into the currently displayed language
 		Microsoft.Translator.Widget.GetLanguagesForTranslate(this.currentLang ? this.currentLang : this.defaultLang ,function(languages){
@@ -140,23 +139,13 @@ var LanguagePicker = {
 			}
 			
 			var preferredLanguageElement = $('<div/>').addClass('preferred-language').addClass('no-edit').text('Preferred Language: ');
-			$('<span/>').addClass('pref-lang-read').addClass('pref-lang-name').text(LanguagePicker.localizedLanguageNames[preferredLanguage]).appendTo(preferredLanguageElement);
-			$('<button/>').addClass('pref-lang-read').text('change').click(function(e){
-				$('.preferred-language').removeClass('no-edit').addClass('edit');
-				return false;
-			}).appendTo(preferredLanguageElement);
-			var select = $('<div/>').addClass('pref-lang-write').addClass('dropdown').append($('<div/>').addClass('caret'));
-			LanguagePicker.buildPrefLangPicker(preferredLanguage,select);
-			select.appendTo(preferredLanguageElement);
-			$('<button/>').addClass('pref-lang-write').text('save').click(function(e){
-				var code = $('.dropdown').data('selected');
-				LanguagePicker.setPreferredLanguage(code);
-				$('.pref-lang-name').text(LanguagePicker.localizedLanguageNames[code]);
-				$('.preferred-language').removeClass('edit').addClass('no-edit');
-				return false;
-			}).appendTo(preferredLanguageElement);
-			
-			LanguagePicker.footer.append(preferredLanguageElement);
+			var preferredLangPicker = $('<div/>').addClass('pref-lang-picker').append($('<span/>').text(LanguagePicker.localizedLanguageNames[preferredLanguage])).append($('<div/>').addClass('caret'));
+			var preferredLangList = $('<ul/>').addClass('pref-lang-list').attr('translate','no');
+			LanguagePicker.buildPrefLangPicker(preferredLanguage,preferredLangList);
+		
+			preferredLangList.appendTo(preferredLangPicker);
+			preferredLangPicker.appendTo(preferredLanguageElement);
+			preferredLanguageElement.appendTo(LanguagePicker.footer);
 			
 			//Set delay to give the browser time complete most ajax calls to load other content
 			$(window).load(function(){
@@ -171,7 +160,7 @@ var LanguagePicker = {
 			$this.css('margin-left','30px');
 		}
 
-		$this.text('Translator: ');
+		$this.text('Translate: ');
 		$this.append($('<span/>').addClass('language-name').attr('translate','no').text(LanguagePicker.localizedLanguageNames[LanguagePicker.currentLang]));
 		ul.appendTo($this);
 	},
