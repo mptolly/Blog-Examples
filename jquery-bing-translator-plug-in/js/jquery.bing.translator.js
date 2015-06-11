@@ -128,7 +128,8 @@ var LanguagePicker = {
 		
 		LanguagePicker.footer = $('<div/>').addClass('language-picker-footer');
 		$('<div/>').append($('<a/>').attr('href','#').addClass('orig-lang').text('Original Language: '+ LanguagePicker.localizedLanguageNames[LanguagePicker.defaultLang]).attr('onclick','Microsoft.Translator.Widget.RestoreOriginal();')).appendTo(LanguagePicker.footer);
-		
+		$('<img/>').attr('src','images/MST_Brand_Attribution_SansSourceLanguage.png').appendTo(LanguagePicker.footer);
+
 		//Create elements and complete the inital translation if translate is set to auto
 		if(options && options["mode"]=='auto'){
 			var preferredLanguage = LanguagePicker.getPreferredLanguage();
