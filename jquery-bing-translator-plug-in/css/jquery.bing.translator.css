@@ -48,18 +48,25 @@
 	right:0;
 	height:25px;
 	vertical-align:bottom;
+	text-align: center;
 }
 .language-picker-footer div{
-	display:inline-block;
+	display: inline-block;
 	margin-left:5px;
-	margin-top:3px;
+	line-height: 25px;
+	float: left;
 }
-.preferred-language{
+.language-picker-footer img{
+	height:20px;
+	margin-top:2px;
+}
+.language-picker-footer div.preferred-language{
 	float:right;
 	margin-right:10px;
 }
-.pref-lang-picker{
+.language-picker-footer div.pref-lang-picker{
 	position: relative;
+	float: none;
 }
 .pref-lang-picker .pref-lang-list{
 	position: absolute;
@@ -71,6 +78,7 @@
 	color: black;
 	min-width:200px;
 	right:-12px;
+	text-align: left;
 }
 .pref-lang-picker:hover .pref-lang-list{
 	display: block;
@@ -78,7 +86,7 @@
 div.caret {
   display: inline-block;
   float:right;
-  margin-top:7px;
+  margin-top:10px;
   width:0;
   height:0;
   vertical-align: middle;
