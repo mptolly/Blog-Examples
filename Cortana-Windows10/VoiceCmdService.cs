@@ -1,5 +1,3 @@
-using CortanaDemo.sectionFinder.Data;
-using CortanaDemo.sectionFinder.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -96,7 +94,7 @@ namespace CortanaDemo {
             // This should match the uap:AppService and VoiceCommandService references from the 
             // package manifest and VCD files, respectively. Make sure we've been launched by
             // a Cortana Voice Command.
-            if (triggerDetails != null && triggerDetails.Name == "CortanaVoiceCommandService") {
+            if (triggerDetails != null && triggerDetails.Name == "VoiceCmdService") {
                 try {
                     voiceServiceConnection =
                         VoiceCommandServiceConnection.FromAppServiceTriggerDetails(
