@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="en-us" Name="MyAppCommandSet_en-us">
+    <AppName>MyApp</AppName>
+    <Example>Open my schedule</Example>
+
+    <Command Name="OpenPage">
+      <Example>Open my schedule</Example>
+      <ListenFor RequireAppName="BeforePhrase"> Open [my] {section}</ListenFor>
+      <ListenFor RequireAppName="AfterPhrase"> Open [my] {section}</ListenFor>
+        <ListenFor RequireAppName="BeforeOrAfterPhrase"> Open [my] {section} </ListenFor>
+      <ListenFor RequireAppName="ExplicitlySpecified"> show [my] {builtin:AppName} {section} </ListenFor>
+      <Feedback> Opening your {section} </Feedback>
+      <Navigate/>
+    </Command>
+
+    <PhraseList Label="section">
+      <Item>schedule</Item>
+      <Item>mail</Item>
+      <Item>tasks</Item>
+    </PhraseList>
+  </CommandSet>
+</VoiceCommands>
