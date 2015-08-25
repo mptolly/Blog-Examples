@@ -12,7 +12,7 @@ using Windows.ApplicationModel.Resources.Core;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Storage;
 
-namespace CortanaDemo.sectionFinder.Cortana {
+namespace CortanaDemo {
 
     /// <summary>
     /// The VoiceCommandService implements the entrypoint for all headless voice commands
@@ -21,7 +21,7 @@ namespace CortanaDemo.sectionFinder.Cortana {
     /// entrypoint is defined in the Package Manifest (See section uap:Extension in 
     /// sectionFinder:Package.appxmanifest)
     /// </summary>
-    sealed class CortanaVoiceCommandService : IBackgroundTask {
+    sealed class VoiceCmdService : IBackgroundTask {
 
         /// <summary>
         /// the service connection is maintained for the lifetime of a cortana session, once a voice command
