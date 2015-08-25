@@ -49,6 +49,7 @@
 	height:25px;
 	vertical-align:bottom;
 	text-align: center;
+	cursor: default;
 }
 .language-picker-footer div{
 	display: inline-block;
@@ -67,6 +68,7 @@
 .language-picker-footer div.pref-lang-picker{
 	position: relative;
 	float: none;
+	cursor: pointer;
 }
 .pref-lang-picker .pref-lang-list{
 	position: absolute;
