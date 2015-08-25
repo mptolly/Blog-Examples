@@ -1,5 +1,5 @@
-using CortanaDemo.RoomFinder.Data;
-using CortanaDemo.RoomFinder.Models;
+using CortanaDemo.sectionFinder.Data;
+using CortanaDemo.sectionFinder.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,14 +12,14 @@ using Windows.ApplicationModel.Resources.Core;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Storage;
 
-namespace CortanaDemo.RoomFinder.Cortana {
+namespace CortanaDemo.sectionFinder.Cortana {
 
     /// <summary>
     /// The VoiceCommandService implements the entrypoint for all headless voice commands
     /// invoked via Cortana. The individual commands supported are described in the
-    /// VoiceCommands.xml VCD file in the RoomFinder project. The service
+    /// VoiceCommands.xml VCD file in the sectionFinder project. The service
     /// entrypoint is defined in the Package Manifest (See section uap:Extension in 
-    /// RoomFinder:Package.appxmanifest)
+    /// sectionFinder:Package.appxmanifest)
     /// </summary>
     sealed class CortanaVoiceCommandService : IBackgroundTask {
 
@@ -109,10 +109,16 @@ namespace CortanaDemo.RoomFinder.Cortana {
                     // Depending on the operation (defined in AdventureWorks:AdventureWorksCommands.xml)
                     // perform the appropriate command.
                     switch (voiceCommand.CommandName) {
-                        case "FindRoom":
-                            string room = voiceCommand.Properties["room"][0];
-                            await SendCompletionMessageForRoom(room);
+/****************************************************************************************************************************************
+ ************************************** MAKE EDITS TO INTEGRATE INTO THE COMMMANDS YOU WISH TO RUN **************************************
+ ****************************************************************************************************************************************/
+                        case "OpenPage":
+                            string section = voiceCommand.Properties["section"][0];
+                            await SendCompletionMessageForSection(section);
                             break;
+/****************************************************************************************************************************************
+ ****************************************************** END EDITS FOR THIS METHOD *******************************************************
+ ****************************************************************************************************************************************/
                         default:
                             // As with app activation VCDs, we need to handle the possibility that
                             // an app update may remove a voice command that is still registered.
@@ -144,7 +150,7 @@ namespace CortanaDemo.RoomFinder.Cortana {
 
         private async void LaunchAppInForeground() {
             var userMessage = new VoiceCommandUserMessage();
-            userMessage.SpokenMessage = cortanaResourceMap.GetValue("LaunchingRoomFinder", cortanaContext).ValueAsString;
+            userMessage.SpokenMessage = cortanaResourceMap.GetValue("LaunchingsectionFinder", cortanaContext).ValueAsString;
 
             var response = VoiceCommandResponse.CreateResponse(userMessage);
 
@@ -152,49 +158,50 @@ namespace CortanaDemo.RoomFinder.Cortana {
 
             await voiceServiceConnection.RequestAppLaunchAsync(response);
         }
-
+/****************************************************************************************************************************************
+ ********************************** MAKE EDITS TO DETERMINE WHAT IS SHOWN WHEN THE COMMAND IS FOUND *************************************
+ ****************************************************************************************************************************************/
         /// <summary>
-        /// Search forthe room requested, if the room can be
+        /// Search for the section requested, if the section can be
         /// found. This demonstrates a simple response flow in Cortana.
         /// </summary>
-        /// <param name="room">The room, expected to be in the phrase list.</param>
+        /// <param name="section">The section, expected to be in the phrase list.</param>
         /// <returns></returns>
-        private async Task SendCompletionMessageForRoom(string room) {
+        private async Task SendCompletionMessageForSection(string section) {
             string loadingTripToDestination = string.Format(
-                       cortanaResourceMap.GetValue("FindingRoom", cortanaContext).ValueAsString,
-                       room);
+                       cortanaResourceMap.GetValue("FindingSection", cortanaContext).ValueAsString,
+                       section);
             await ShowProgressScreen(loadingTripToDestination);
 
             VoiceCommandUserMessage userMessage = new VoiceCommandUserMessage();
             List<VoiceCommandContentTile> tiles = new List<VoiceCommandContentTile>();
 
-            if (!RoomData.Rooms.ContainsKey(room)) {
+            if (!sectionData.sections.ContainsKey(section)) {
                 // In this scenario, perhaps someone has modified data on your service outside of your 
                 // control. If you're accessing a remote service, having a background task that
                 // periodically refreshes the phrase list so it's likely to be in sync is ideal.
-                // This is unlikely to occur for this sample app, however.
-                string foundNoRoom = string.Format(
-                       cortanaResourceMap.GetValue("FoundNoRoom", cortanaContext).ValueAsString,
-                       room);
-                userMessage.DisplayMessage = foundNoRoom;
-                userMessage.SpokenMessage = foundNoRoom;
+                string foundNosection = string.Format(
+                       cortanaResourceMap.GetValue("FoundNoSection", cortanaContext).ValueAsString,
+                       section);
+                userMessage.DisplayMessage = foundNosection;
+                userMessage.SpokenMessage = foundNosection;
             }
             else {
-                string message = string.Format("{0} {1}", cortanaResourceMap.GetValue("RoomFound", cortanaContext).ValueAsString, room);
+                string message = string.Format("{0} {1}", cortanaResourceMap.GetValue("sectionFound", cortanaContext).ValueAsString, section);
                 userMessage.DisplayMessage = message;
                 userMessage.SpokenMessage = message;
 
                 VoiceCommandContentTile tile = new VoiceCommandContentTile();
                 tile.ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText;
-                tile.Image = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Square44x44Logo.scale-200.png.png"));
+                tile.Image = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Square44x44Logo.scale-200.png.png")); // Image icon next to result when command with phrase found
 
-                tile.AppLaunchArgument = room;
-                tile.Title = string.Format("Conference Room: ", room);
+                tile.AppLaunchArgument = section;
+                tile.Title = string.Format("Section: ", section);
                 tiles.Add(tile);
             }
 
             VoiceCommandResponse response = VoiceCommandResponse.CreateResponse(userMessage, tiles);
-            response.AppLaunchArgument = room;
+            response.AppLaunchArgument = section;
             await voiceServiceConnection.ReportSuccessAsync(response);
         }
 
