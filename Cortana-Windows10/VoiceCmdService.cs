@@ -174,7 +174,7 @@ namespace CortanaDemo {
             VoiceCommandUserMessage userMessage = new VoiceCommandUserMessage();
             List<VoiceCommandContentTile> tiles = new List<VoiceCommandContentTile>();
 
-            if (!sectionData.sections.ContainsKey(section)) {
+            if (!SectionData.Sections.ContainsKey(section)) {
                 // In this scenario, perhaps someone has modified data on your service outside of your 
                 // control. If you're accessing a remote service, having a background task that
                 // periodically refreshes the phrase list so it's likely to be in sync is ideal.
