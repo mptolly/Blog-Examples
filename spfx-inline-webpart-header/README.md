@@ -1,11 +1,12 @@
 ## spfx-inline-header
 
-This is where you include your WebPart documentation.
+This web part demonstrates how to create a web part title editing experience similar to that on the Quick links web part provided by microsoft
 
 ### Building the code
 
 ```bash
-git clone the repo
+git https://github.com/mptolly/Blog-Examples.git
+cd spfx-inline-webpart-header
 npm i
 npm i -g gulp
 gulp
