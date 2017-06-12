@@ -6,7 +6,7 @@ This web part demonstrates how to create a web part title editing experience sim
 
 ```bash
 git https://github.com/mptolly/Blog-Examples.git
-cd spfx-inline-webpart-header
+cd Blog-Examples/spfx-inline-webpart-header
 npm i
 npm i -g gulp
 gulp
