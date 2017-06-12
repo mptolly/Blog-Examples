@@ -1,0 +1,25 @@
+.webpart-header {
+    font-size: 24px;
+    & .edit {
+        background-color: transparent;
+        border: none;
+        box-sizing: border-box;
+        display: block;
+        margin: 0;
+        outline: 0;
+        overflow: hidden;
+        resize: none;
+        white-space: pre;
+        width: 100%;
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        text-align: inherit;
+        color: #333333;
+        height: 40px;
+    }
+    & .view {
+        color: #333333;
+    }
+}

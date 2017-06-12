@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "name": "spfx-inline-header-client-side-solution",
+    "id": "48197375-e291-4cfc-9881-81781086598a",
+    "version": "1.0.0.0"
+  },
+  "paths": {
+    "zippedPackage": "solution/spfx-inline-header.sppkg"
+  }
+}

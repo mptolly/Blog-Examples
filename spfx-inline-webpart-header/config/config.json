@@ -1,0 +1,13 @@
+{
+  "entries": [
+    {
+      "entry": "./lib/webparts/inlineHeaderExample/InlineHeaderExampleWebPart.js",
+      "manifest": "./src/webparts/inlineHeaderExample/InlineHeaderExampleWebPart.manifest.json",
+      "outputPath": "./dist/inline-header-example.bundle.js"
+    }
+  ],
+  "externals": {},
+  "localizedResources": {
+    "inlineHeaderExampleStrings": "webparts/inlineHeaderExample/loc/{locale}.js"
+  }
+}
